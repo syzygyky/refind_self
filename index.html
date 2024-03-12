@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Refind Self</title>
+  <style>
+    body {
+      background-color: #d6ccb8;
+      height: 95vh;
+    }
+    select {
+      background-color: #f8eeda;
+    }
+    .container {
+      position: relative;
+    }
+    select#lang {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    /*
+    div#header {
+      position: sticky;
+      top: 0;
+      z-index:3;
+    }
+    */
+    div#table-wrapper {
+      height: 90vh;
+      overflow-y: scroll;
+    }
+    table {
+      border-collapse: collapse;
+    }
+    thead th:nth-of-type(1) {
+      height: 64px;
+      min-width: 128px;
+      position: sticky;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      background-color: #d6ccb8;
+      border: 0.5px solid #000;
+    }
+    thead th:nth-of-type(n+2) {
+      font-size: 8px;
+      width: 48px;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background-color: #ccc;
+    }
+    th p {
+      overflow-x: hidden;
+    }
+    tbody td:nth-of-type(1) {
+      position: sticky;
+      top: 0;
+      left: 0;
+      background-color: #cfc5b0;
+    }
+    tbody td:nth-of-type(1)::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0.5px solid #000;
+      background-color: #cfc5b0;
+      z-index: -1;
+    }
+    tbody td:nth-of-type(n+2) {
+      text-align: right;
+      padding: 4px;
+    }
+    tbody td:nth-of-type(1) {
+      font-size: 14px;
+    }
+    tr,th,td {
+      border: solid 0.5px #000;
+    }
+    th button {
+      background-color: #d6ccb8;
+      border: none;
+      width: 24px;
+      height: 24px;
+      margin-top: -12px;
+    }
+    .adventurer,
+    .researcher,
+    .artisan,
+    .traveler {
+      background-image: url('./icon/main_badge_frame_passion.png');
+    }
+    .butler,
+    .leader,
+    .judge,
+    .clergy,
+    .pacifist {
+      background-image: url('./icon/main_badge_frame_morals.png');
+    }
+    .soloplayer,
+    .bancho,
+    .runner,
+    .challenger,
+    .planner {
+      background-image: url('./icon/main_badge_frame_methods.png');
+    }
+    .samurai,
+    .philosopher,
+    .martialartist,
+    .clown {
+      background-image: url('./icon/main_badge_frame_judgment.png');
+    }
+    .sage,
+    .hero,
+    .gambler,
+    .merchant,
+    .collector {
+      background-image: url('./icon/main_badge_frame_daring.png');
+    }
+    button img {
+      margin: 2px 0 0 -3px;
+    }
+    th:hover button {
+      cursor: pointer;
+      margin-top: -8px;
+    }
+    th p {
+      margin: 0 0 0 1px;
+      display: block;
+      overflow-y: hidden;
+      position: absolute;
+      text-align: center;
+      top: 80%;
+      transform: translateY(-50%);
+      width: 90%;
+    }
+    #navigateCategoryBtn button {
+      background-color: #d6ccb8;
+      border: solid 1px #444;
+      width: 32px;
+    }
+    #navigateCategoryBtn button:hover {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="header">
+      <select id="lang">
+        <option value="ja">ja</option>
+        <option value="en">en</option>
+      </select>
+      <select id="category">
+        <option value="">--全て表示--</option>
+        <option value="firstarea">最初のエリア</option>
+        <option value="bench">ベンチ</option>
+        <option value="divination">バッテリー、占い</option>
+        <option value="shrine">神社</option>
+        <option value="kokoro">こころ・羊の絵</option>
+        <option value="mirror">鏡</option>
+        <option value="kibou">きぼう</option>
+        <option value="object">その他の物体</option>
+        <option value="sheep">いのり</option>
+        <option value="caringsheep">羊の世話</option>
+        <option value="recycleshop">リサイクルショップ</option>
+        <option value="npc">森のNPC</option>
+        <option value="vendingmachine">自動販売機</option>
+        <option value="cat">猫</option>
+        <option value="m2">玩具型M2</option>
+        <option value="telescope">望遠鏡</option>
+        <option value="cafe">だる・カフェ</option>
+        <option value="shootinggame">シューティングゲーム</option>
+        <option value="labo">研究所</option>
+        <option value="actiongame">アクションゲーム</option>
+        <option value="cigarette">たばこ</option>
+        <option value="mirai">みらい</option>
+        <option value="casino">カジノ</option>
+        <option value="cave">洞窟</option>
+        <option value="m1">玩具型M1</option>
+        <option value="coast">海岸</option>
+        <option value="defense">防衛戦</option>
+        <option value="collapsedman">倒れている人</option>
+        <option value="misc">いろいろ</option>
+        <option value="finalaction">最後の行動</option>
+        <option value="ending">エンディング</option>
+      </select>
+      <span id="navigateCategoryBtn">
+        <button type="button" data-nav="first">&lt;&lt;</button>
+        <button type="button" data-nav="prev">&lt;</button>
+        <button type="button" data-nav="next">&gt;</button>
+        <button type="button" data-nav="last">&gt;&gt;</button>
+      </span>
+    </div>
+    <div id="table-wrapper">
+      <table id="list">
+        <thead>
+          <tr class="ja">
+            <th>行動</th>
+            <th><button type="button" class="adventurer"><img src="./icon/adventurer.png"></button><p>冒険家</p></th>
+            <th><button type="button" class="researcher"><img src="./icon/researcher.png"></button><p>研究家</p></th>
+            <th><button type="button" class="artisan"><img src="./icon/artisan.png"></button><p>職人</p></th>
+            <th><button type="button" class="traveler"><img src="./icon/traveler.png"></button><p>旅人</p></th>
+            <th><button type="button" class="butler"><img src="./icon/butler.png"></button><p>執事</p></th>
+            <th><button type="button" class="leader"><img src="./icon/leader.png"></button><p>リーダー</p></th>
+            <th><button type="button" class="judge"><img src="./icon/judge.png"></button><p>裁判官</p></th>
+            <th><button type="button" class="clergy"><img src="./icon/clergy.png"></button><p>聖職者</p></th>
+            <th><button type="button" class="pacifist"><img src="./icon/pacifist.png"></button><p>平和主義者</p></th>
+            <th><button type="button" class="soloplayer"><img src="./icon/soloplayer.png"></button><p>ソロプレイヤー</p></th>
+            <th><button type="button" class="bancho"><img src="./icon/bancho.png"></button><p>番長</p></th>
+            <th><button type="button" class="runner"><img src="./icon/runner.png"></button><p>ランナー</p></th>
+            <th><button type="button" class="challenger"><img src="./icon/challenger.png"></button><p>挑戦者</p></th>
+            <th><button type="button" class="planner"><img src="./icon/planner.png"></button><p>プランナー</p></th>
+            <th><button type="button" class="samurai"><img src="./icon/samurai.png"></button><p>侍</p></th>
+            <th><button type="button" class="philosopher"><img src="./icon/philosopher.png"></button><p>哲学者</p></th>
+            <th><button type="button" class="martialartist"><img src="./icon/martialartist.png"></button><p>武闘家</p></th>
+            <th><button type="button" class="clown"><img src="./icon/clown.png"></button><p>道化師</p></th>
+            <th><button type="button" class="sage"><img src="./icon/sage.png"></button><p>賢者</p></th>
+            <th><button type="button" class="hero"><img src="./icon/hero.png"></button><p>勇者</p></th>
+            <th><button type="button" class="gambler"><img src="./icon/gambler.png"></button><p>ギャンブラー</p></th>
+            <th><button type="button" class="merchant"><img src="./icon/merchant.png"></button><p>商人</p></th>
+            <th><button type="button" class="collector"><img src="./icon/collector.png"></button><p>コレクター</p></th>
+          </tr>
+          <tr class="en" style="display:none">
+            <th>行動</th>
+            <th><button type="button" class="adventurer"><img src="./icon/adventurer.png"></button><p>Adventurer</p></th>
+            <th><button type="button" class="researcher"><img src="./icon/researcher.png"></button><p>Researcher</p></th>
+            <th><button type="button" class="artisan"><img src="./icon/artisan.png"></button><p>Artisan</p></th>
+            <th><button type="button" class="traveler"><img src="./icon/traveler.png"></button><p>Traveler</p></th>
+            <th><button type="button" class="butler"><img src="./icon/butler.png"></button><p>Butler</p></th>
+            <th><button type="button" class="leader"><img src="./icon/leader.png"></button><p>Leader</p></th>
+            <th><button type="button" class="judge"><img src="./icon/judge.png"></button><p>Judge</p></th>
+            <th><button type="button" class="clergy"><img src="./icon/clergy.png"></button><p>Clergy</p></th>
+            <th><button type="button" class="pacifist"><img src="./icon/pacifist.png"></button><p>Pacifist</p></th>
+            <th><button type="button" class="soloplayer"><img src="./icon/soloplayer.png"></button><p>Solo Player</p></th>
+            <th><button type="button" class="bancho"><img src="./icon/bancho.png"></button><p>Bancho</p></th>
+            <th><button type="button" class="runner"><img src="./icon/runner.png"></button><p>Runner</p></th>
+            <th><button type="button" class="challenger"><img src="./icon/challenger.png"></button><p>Challenger</p></th>
+            <th><button type="button" class="planner"><img src="./icon/planner.png"></button><p>Planner</p></th>
+            <th><button type="button" class="samurai"><img src="./icon/samurai.png"></button><p>Samurai</p></th>
+            <th><button type="button" class="philosopher"><img src="./icon/philosopher.png"></button><p>Philosopher</p></th>
+            <th><button type="button" class="martialartist"><img src="./icon/martialartist.png"></button><p>Martial Artist</p></th>
+            <th><button type="button" class="clown"><img src="./icon/clown.png"></button><p>Clown</p></th>
+            <th><button type="button" class="sage"><img src="./icon/sage.png"></button><p>Sage</p></th>
+            <th><button type="button" class="hero"><img src="./icon/hero.png"></button><p>Hero</p></th>
+            <th><button type="button" class="gambler"><img src="./icon/gambler.png"></button><p>Gambler</p></th>
+            <th><button type="button" class="merchant"><img src="./icon/merchant.png"></button><p>Merchant</p></th>
+            <th><button type="button" class="collector"><img src="./icon/collector.png"></button><p>Collector</p></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <div style="display:none;">
+    <table id="template">
+      <tr></tr>
+    </table>
+  </div>
+  <script src="score.js"></script>
+  <script src="table.js"></script>
+  <script src="lang.js"></script>
+</body>
+</html>
